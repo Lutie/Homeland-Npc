@@ -1,0 +1,30 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="">Homeland</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li>
+                    <a href="">{{ app.user.getUsername }} (Utilisateur)</a>
+                </li>
+            {% endif %}
+            <li class="{{ route == 'app_security_login' ? 'active' }}">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="">Log Out</a>
+                {% else %}
+                    <a href="">Log In</a>
+                {% endif %}
+            </li>
+            {% if is_granted('ROLE_USER') == false %}
+                <li class="{{ route == 'app_security_signup' ? 'active' }}">
+                    <a href="">Sign In</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
