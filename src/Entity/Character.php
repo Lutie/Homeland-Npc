@@ -94,11 +94,6 @@ class Character extends AbstractType
      */
     private $weight;
 
-    /**
-     *
-     */
-    private $build;
-
     public function __construct()
     {
         $this->particularities = new ArrayCollection();
