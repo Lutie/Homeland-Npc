@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ character.id ? 'Update' : 'Create' }} a character{% endblock %}
+
+{% block body %}
+
+    {% set random_route = path('random') %}
+
+    <h1>{{ character.id ? 'Update a' : 'Create a' }} character {{ character.firstname }} {{ character.lastname }}</h1>
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-xs-3"> {{ form_row(form.firstname) }} </div>
+        <div class="col-xs-3"> {{ form_row(form.lastname) }} </div>
+        <div class="col-xs-2"> {{ form_row(form.age) }} </div>
+        <div class="row col-xs-1">
+            <div id="random_age" class="btn btn-warning" data-api="{{ random_route }}"><i class="fas fa-dice"></i></div>
+            <div id="lock_age" class="btn btn-primary"><i class="fas fa-lock-open"></i></div>
+        </div>
+        <div class="col-xs-2">{{ form_row(form.sex) }} </div>
+        <div class="row col-xs-1">
+            <div id="random_sex" class="btn btn-warning" data-api="{{ random_route }}"><i class="fas fa-dice"></i></div>
+            <div id="lock_sex" class="btn btn-primary"><i class="fas fa-lock-open"></i></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3"> {{ form_row(form.description) }} </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ character.id ? 'Update' : 'Create' }}</button>
+    <a href="{{ path('index') }}"
+       class="btn btn-primary">Cancel</a>
+    <div id="random_all" data-api="{{ random_route }}" class="btn btn-warning">Randomize</div>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -4,17 +4,31 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CharacterRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="characters")
  */
-class Character extends AbstractType
+class Character
 {
+    const SEX_UNDEFINED = 0;
+    const SEX_MALE = 1;
+    const SEX_FEMALE = 2;
+
+    const SEX_TYPES = [
+        'male' => self::SEX_MALE,
+        'female' => self::SEX_FEMALE,
+        'unknown' => self::SEX_UNDEFINED
+    ];
 
     use IdTrait;
+
+    use DescriptionTrait;
+
+    use AttributesTrait;
+
+    use ParticularityTrait;
 
     /**
      * @ORM\Column()
@@ -33,21 +47,17 @@ class Character extends AbstractType
     private $lastname;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="characters")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Type("\DateTimeInterface")
      */
-    private $author;
-
-    /**
-     * @ORM\Column(type="createAt")
-     * @Assert\Date()
-     */
-    private $createdAt;
+    private $createAt;
 
     /**
      * @ORM\Column()
      * @Assert\NotNull()
+     * @Assert\Type("integer")
      */
-    private $sex;
+    private $sex = self::SEX_UNDEFINED;
 
     /**
      * @ORM\Column()
@@ -56,380 +66,60 @@ class Character extends AbstractType
      */
     private $age;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Morphology")
-     */
-    private $morphology;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Personality")
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Assert\NotNull()
-     */
-    private $personality;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Particularity")
-     */
-    private $particularities;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Liability")
-     */
-    private $liabilities;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Ethnic")
-     * @ORM\Column(nullable=true)
-     */
-    private $ethnic;
-
-    /**
-     *
-     */
-    private $size;
-
-    /**
-     *
-     */
-    private $weight;
-
     public function __construct()
     {
         $this->particularities = new ArrayCollection();
-        $this->liabilities = new ArrayCollection();
-        $this->morphology = new ArrayCollection();
-
-        $this->date = new \DateTime();
+        $this->attributes = new ArrayCollection();
+        $this->createAt = new \DateTime();
     }
 
-    /**
-     * Set firstname
-     *
-     * @param string $firstname
-     *
-     * @return Character
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     *
-     * @return string
-     */
     public function getFirstname()
     {
         return $this->firstname;
     }
 
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return Character
-     */
-    public function setLastname($lastname)
+    public function setFirstname($firstname)
     {
-        $this->lastname = $lastname;
-
-        return $this;
+        $this->firstname = $firstname;
     }
 
-    /**
-     * Get lastname
-     *
-     * @return string
-     */
     public function getLastname()
     {
         return $this->lastname;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Character
-     */
-    public function setCreatedAt($createdAt)
+    public function setLastname($lastname)
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->lastname = $lastname;
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreateAt()
     {
-        return $this->createdAt;
+        return $this->createAt;
     }
 
-    /**
-     * Set universe
-     *
-     * @param string $universe
-     *
-     * @return Character
-     */
-    public function setUniverse($universe)
+    public function setCreateAt($createAt)
     {
-        $this->universe = $universe;
-
-        return $this;
+        $this->createAt = $createAt;
     }
 
-    /**
-     * Get universe
-     *
-     * @return string
-     */
-    public function getUniverse()
-    {
-        return $this->universe;
-    }
-
-    /**
-     * Set sex
-     *
-     * @param string $sex
-     *
-     * @return Character
-     */
-    public function setSex($sex)
-    {
-        $this->sex = $sex;
-
-        return $this;
-    }
-
-    /**
-     * Get sex
-     *
-     * @return string
-     */
     public function getSex()
     {
         return $this->sex;
     }
 
-    /**
-     * Set age
-     *
-     * @param string $age
-     *
-     * @return Character
-     */
-    public function setAge($age)
+    public function setSex($sex)
     {
-        $this->age = $age;
-
-        return $this;
+        $this->sex = $sex;
     }
 
-    /**
-     * Get age
-     *
-     * @return string
-     */
     public function getAge()
     {
         return $this->age;
     }
 
-    /**
-     * Set ethnic
-     *
-     * @param string $ethnic
-     *
-     * @return Character
-     */
-    public function setEthnic($ethnic)
+    public function setAge($age)
     {
-        $this->ethnic = $ethnic;
-
-        return $this;
+        $this->age = $age;
     }
-
-    /**
-     * Get ethnic
-     *
-     * @return string
-     */
-    public function getEthnic()
-    {
-        return $this->ethnic;
-    }
-
-    /**
-     * Set author
-     *
-     * @param \AppBundle\Entity\User $author
-     *
-     * @return Character
-     */
-    public function setAuthor(\AppBundle\Entity\User $author = null)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * Get author
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * Set personality
-     *
-     * @param \AppBundle\Entity\Personality $personality
-     *
-     * @return Character
-     */
-    public function setPersonality(\AppBundle\Entity\Personality $personality)
-    {
-        $this->personality = $personality;
-
-        return $this;
-    }
-
-    /**
-     * Get personality
-     *
-     * @return \AppBundle\Entity\Personality
-     */
-    public function getPersonality()
-    {
-        return $this->personality;
-    }
-
-    /**
-     * Get particularities
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParticularities()
-    {
-        return $this->particularities;
-    }
-
-    public function addParticularities(Particularity $particularity)
-    {
-        if (!$this->particularities->contains($particularity)) {
-            $this->particularities->add($particularity);
-        }
-
-        return $this;
-    }
-
-    public function removeParticularities(Particularity $particularity)
-    {
-        if ($this->particularities->contains($particularity)) {
-            $this->particularities->removeElement($particularity);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get liabilities
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLiabilities()
-    {
-        return $this->liabilities;
-    }
-
-
-    public function addLiabilities(Liability $liability)
-    {
-        if (!$this->liabilities->contains($liability)) {
-            $this->liabilities->add($liability);
-        }
-
-        return $this;
-    }
-
-    public function removeLiabilities(Liability $liability)
-    {
-        if ($this->liabilities->contains($liability)) {
-            $this->liabilities->removeElement($liability);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMorphology()
-    {
-        return $this->morphology;
-    }
-
-    public function addMorphology(Morphology $morphology)
-    {
-        if (!$this->morphology->contains($morphology)) {
-            $this->morphology->add($morphology);
-        }
-
-        return $this;
-    }
-
-    public function removeMorphology(Morphology $morphology)
-    {
-        if ($this->morphology->contains($morphology)) {
-            $this->morphology->removeElement($morphology);
-        }
-
-        return $this;
-    }
-
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-    public function setSize($size)
-    {
-        $this->size = $size;
-    }
-
-    public function getWeight()
-    {
-        return $this->weight;
-    }
-
-    public function setWeight($weight)
-    {
-        $this->weight = $weight;
-    }
-
-    public function getBuild()
-    {
-        return $this->build;
-    }
-
-    public function setBuild($build)
-    {
-        $this->build = $build;
-    }
-
 }

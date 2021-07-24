@@ -1,42 +1,46 @@
-<div class="table-responsive table-hover">
-    <table class="table table-bordered table-striped">
+{% extends 'base.html.twig' %}
 
-        <thead>
-        <td>Name</td>
-        <td>Sex</td>
-        <td>Age</td>
-        <td>Author</td>
-        <td>Created At</td>
-        <td colspan="2">
-            <a href=""
-                class="btn btn-success btn-block">Créer</a>
-        </td>
-        </thead>
+{% block body %}
+    <h1> NPC Generator (Index)</h1>
+    </br>
+    <div class="table-responsive table-hover">
+        <table class="table table-bordered table-striped">
 
-        <tbody>
-        {% set mon_token = csrf_token('CHARACTER_TOKEN') %}
-        {% for data in datas %}
-            <tr>
-                <td>
-                    <a href="">{{ data.firstname }}</a>
-                </td>
-                <td>
-                    {{ data.sex == 0 ? 'Male' : 'Female' }}
-                </td>
-                <td>{{ data.age }}</td>
-                <td>{{ data.author }}</td>
-                <td>{{ data.date|date("d/m/Y") }}</td>
-                <td>
-                    <a href=""
-                       class="btn btn-warning btn-block">Update</a></td>
-                <td>
-                    <a href=""
-                       class="btn btn-danger btn-block">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% if datas == null %}
-        <p>Their is actually no character to display !</p>
-    {% endif %}
-</div>
+            <thead>
+            <td>Name</td>
+            <td>Sex</td>
+            <td>Age</td>
+            <td>Created At</td>
+            <td colspan="2">
+                <a href="{{ path('create') }}"
+                    class="btn btn-success btn-block">Create</a>
+            </td>
+            </thead>
+
+            <tbody>
+            {% set mon_token = csrf_token('CHARACTER_TOKEN') %}
+            {% for char in data %}
+                <tr>
+                    <td>
+                        <a href="">{{ char.firstname }} {{ char.lastname }}</a>
+                    </td>
+                    <td>
+                        {{ char.sex == 0 ? 'Male' : 'Female' }}
+                    </td>
+                    <td>{{ char.age }}</td>
+                    <td>{{ char.createAt|date("d/m/Y") }}</td>
+                    <td>
+                        <a href=""
+                        class="btn btn-warning btn-block">Update</a></td>
+                    <td>
+                        <a href=""
+                        class="btn btn-danger btn-block">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if data == null %}
+            <p>Their is actually no character to display !</p>
+        {% endif %}
+    </div>
+{% endblock %}
