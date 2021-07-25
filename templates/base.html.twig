@@ -34,6 +34,7 @@
     </head>
     <body>
         {% include('_menu.html.twig') %}
+        {% block sub_menu %}{% endblock %}
         {% include('_flash.html.twig') %}
         <div class="container">
         {% block body %}{% endblock %}

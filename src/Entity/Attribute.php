@@ -20,4 +20,14 @@ class Attribute
      * @ORM\Column(name="isPrimary", type="boolean", options={"default":"0"})
      */
     private $isPrimary = true;
+
+    public function getIsPrimary()
+    {
+        return $this->isPrimary;
+    }
+
+    public function setIsPrimary($isPrimary)
+    {
+        $this->isPrimary = $isPrimary;
+    }
 }

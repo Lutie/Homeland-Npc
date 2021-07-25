@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_menu %}
+    {% include('config/_menu.html.twig') %}
+{% endblock %}
+
+{% block body %}
+    <h1>{{subject|capitalize}}</h1>
+    </br>
+    <div class="table-responsive table-hover">
+        <table class="table table-bordered table-striped">
+
+            <thead>
+            <td>Name</td>
+            <td>Description</td>
+            <td colspan="2">
+                <a href="{{ path('config_' ~ subject ~ '_create') }}"
+                    class="btn btn-success btn-block">Create</a>
+            </td>
+            </thead>
+
+            <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>
+                        <a href="{{path('config_' ~ subject ~ '_update', {id:item.id})}}">{{ item.name }}</a>
+                    </td>
+                    <td>
+                        {{ item.description }}
+                    </td>
+                    <td>
+                        <a href=""
+                        class="btn btn-warning btn-block">Update</a></td>
+                    <td>
+                        <a href=""
+                        class="btn btn-danger btn-block">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if data == null %}
+            <p>Their is actually nothing to display !</p>
+        {% endif %}
+    </div>
+{% endblock %}

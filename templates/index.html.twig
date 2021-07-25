@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1> NPC Generator (Index)</h1>
+    <h1> NPC Generator (App)</h1>
     </br>
     <div class="table-responsive table-hover">
         <table class="table table-bordered table-striped">
 
             <thead>
-            <td>Name</td>
-            <td>Sex</td>
-            <td>Age</td>
-            <td>Created At</td>
-            <td colspan="2">
-                <a href="{{ path('create') }}"
-                    class="btn btn-success btn-block">Create</a>
-            </td>
+                <td>Name</td>
+                <td>Sex</td>
+                <td>Age</td>
+                <td>Created At</td>
+                <td colspan="3">
+                    <a href="{{ path('default_create') }}"
+                        class="btn btn-success btn-block">Create</a>
+                </td>
             </thead>
 
             <tbody>
@@ -22,7 +22,7 @@
             {% for char in data %}
                 <tr>
                     <td>
-                        <a href="">{{ char.firstname }} {{ char.lastname }}</a>
+                        <a href="{{path('default_display', {id:char.id})}}">{{ char.firstname }} {{ char.lastname }}</a>
                     </td>
                     <td>
                         {{ char.sex == 0 ? 'Male' : 'Female' }}
@@ -30,10 +30,13 @@
                     <td>{{ char.age }}</td>
                     <td>{{ char.createAt|date("d/m/Y") }}</td>
                     <td>
-                        <a href=""
+                        <a href="{{path('default_export', {id:char.id})}}"
+                        class="btn btn-primary btn-block">Export</a></td>
+                    <td>
+                        <a href="{{path('default_update', {id:char.id})}}"
                         class="btn btn-warning btn-block">Update</a></td>
                     <td>
-                        <a href=""
+                        <a href="{{path('default_delete', {id:char.id})}}"
                         class="btn btn-danger btn-block">Delete</a></td>
                 </tr>
             {% endfor %}

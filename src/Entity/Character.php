@@ -93,6 +93,11 @@ class Character
         $this->lastname = $lastname;
     }
 
+    public function getName()
+    {
+        return $this->lastname . ' ' . $this->lastname;
+    }
+
     public function getCreateAt()
     {
         return $this->createAt;

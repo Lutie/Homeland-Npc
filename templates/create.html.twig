@@ -6,7 +6,7 @@
 
     {% set random_route = path('random') %}
 
-    <h1>{{ character.id ? 'Update a' : 'Create a' }} character {{ character.firstname }} {{ character.lastname }}</h1>
+    <h1>{{ character.id ? 'Update a' : 'Create a' }} character {{ character.name }}</h1>
     {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
     <div class="row">
         <div class="col-xs-3"> {{ form_row(form.firstname) }} </div>
@@ -27,7 +27,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">{{ character.id ? 'Update' : 'Create' }}</button>
-    <a href="{{ path('index') }}"
+    <a href="{{ path('default_index') }}"
        class="btn btn-primary">Cancel</a>
     <div id="random_all" data-api="{{ random_route }}" class="btn btn-warning">Randomize</div>
     {{ form_end(form) }}

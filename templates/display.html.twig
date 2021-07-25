@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ character.id ? 'Update' : 'Create' }} a character{% endblock %}
+
+{% block body %}
+
+    <h1>{{ character.name }}</h1>
+    <div class="row">
+        <div class="col-xs-2"> Age {{ character.age }} </div>
+        <div class="col-xs-2"> Sex {{ character.sex }} </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3"> {{ character.description }} </div>
+    </div>
+
+{% endblock %}

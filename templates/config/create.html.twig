@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_menu %}
+    {% include('config/_menu.html.twig') %}
+{% endblock %}
+
+{% block title %}{{ data.id ? 'Update' : 'Create' }} {{ subject }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ data.id ? 'Update' : 'Create' }} {{ subject }} {{ data.name }}</h1>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-xs-3"> {{ form_row(form.name) }} </div>
+        {% if form.type is defined %}
+            <div class="col-xs-3"> {{ form_row(form.type) }} </div>
+        {% endif %}
+        {% if form.ratio is defined %}
+            <div class="col-xs-3"> {{ form_row(form.ratio) }} </div>
+        {% endif %}
+        {% if form.value is defined %}
+            <div class="col-xs-3"> {{ form_row(form.value) }} </div>
+        {% endif %}
+        {% if form.attribute is defined %}
+            <div class="col-xs-3"> {{ form_row(form.attribute) }} </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xs-12"> {{ form_row(form.description) }} </div>
+    </div>
+    <button type="submit" class="btn btn-primary">{{ data.id ? 'Update' : 'Create' }}</button>
+    <a href="{{ path('config_' ~ subject) }}"
+       class="btn btn-primary">Cancel</a>
+    {{ form_end(form) }}
+
+{% endblock %}

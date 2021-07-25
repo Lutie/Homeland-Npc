@@ -1,0 +1,14 @@
+{% set route = app.request.attributes.get('_route') %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="{{ route starts with 'config_particularity' ? 'active' }}">
+                <a href="{{ path('config_particularity') }}">Particularity</a>
+            </li>
+            <li class="{{ route starts with 'config_attribute' ? 'active' }}">
+                <a href="{{ path('config_attribute') }}">Attribute</a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Character;
 use App\Type\CharacterType;
+use App\Service\PdfRender;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,7 +22,7 @@ class DefaultController extends AbstractController
     }
  
     /**
-     * @Route(name="index")
+     * @Route(name="default_index")
      */
     public function indexAction()
     {
@@ -33,7 +34,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="create")
+     * @Route("/create", name="default_create")
      */
     public function createAction(Request $request)
     {
@@ -42,11 +43,10 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($character);
-            $em->flush();
+            $this->em->persist($character);
+            $this->em->flush();
 
-            $this->addFlash('success', 'The character "' . $character->getFirstname() . '" "' . $character->getLastname() . '" has been created.');
+            $this->addFlash('success', 'The character "' . $character->getName() . '" has been created.');
 
             return $this->redirectToRoute('index');
         }
@@ -55,6 +55,69 @@ class DefaultController extends AbstractController
             'form' => $form->createView(),
             'character' => $character
         ]);
+    }
+
+    /**
+     * @Route("/update/{id}", name="default_update")
+     */
+    public function updateAction(Request $request, Character $character)
+    {
+        $form = $this->createForm(CharacterType::class, $character);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($character);
+            $this->em->flush();
+
+            $this->addFlash('success', 'The character "' . $character->getName() . '" has been modified.');
+
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render('create.html.twig', [
+            'form' => $form->createView(),
+            'character' => $character
+        ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="default_delete")
+     */
+    public function deleteAction(Character $character)
+    {
+        $this->em->remove($character);
+        $this->em->flush();
+
+        $this->addFlash('success', 'The character "' . $character->getName() . '" has been deleted.');
+
+        return $this->redirectToRoute('index');
+    }
+
+    /**
+     * @Route("/display/{id}", name="default_display")
+     */
+    public function displayAction(Character $character)
+    {
+        return $this->render('display.html.twig', [
+            'character' => $character
+        ]);
+    }
+
+    /**
+     * @Route("/export/{id}", name="default_export")
+     */
+    public function exportAction(Character $character)
+    {
+        $this->generatePdf($character);
+    }
+
+    function generatePdf(Character $character) {
+        $html = $this->renderView('pdf/character_sheet.html.twig', [
+            'data' => $character,
+        ]);
+
+        $pdfRender = new PdfRender;
+        $pdfRender->generatePdf($html, $character->getName() . " sheet");
     }
  
     /**
@@ -89,7 +152,6 @@ class DefaultController extends AbstractController
 
     private function getRandom($class, $type)
     {
-
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository($class);
 

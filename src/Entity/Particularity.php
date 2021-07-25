@@ -30,22 +30,22 @@ class Particularity
     const UNIVERSE = 15;
 
     const PARTICULARITY_TYPES = [
-        self::DEFAULT => 'default',
-        self::HEAR_COLOR => 'hearcolor',
-        self::HEAR_STYLE => 'hearstyle',
-        self::EYE_COLOR => 'eyecolor',
-        self::CHARACTER => 'character',
-        self::ALIGNEMENT => 'alignement',
-        self::PERSONALITY => 'personality',
-        self::ATTITUDE => 'attitude',
-        self::JOB => 'job',
-        self::OCCUPATION => 'occupation',
-        self::MANIA => 'mania',
-        self::DISTINCTIVE => 'distinctive',
-        self::CULTURAL => 'cultural',
-        self::ETHNIC => 'ethnic',
-        self::LIABILITY => 'liability',
-        self::UNIVERSE => 'universe'
+        'default' => self::DEFAULT,
+        'hearcolor' => self::HEAR_COLOR,
+        'hearstyle' => self::HEAR_STYLE,
+        'eyecolor' => self::EYE_COLOR,
+        'character' => self::CHARACTER,
+        'alignement' => self::ALIGNEMENT,
+        'personality' => self::PERSONALITY,
+        'attitude' => self::ATTITUDE,
+        'job' => self::JOB,
+        'occupation' => self::OCCUPATION,
+        'mania' => self::MANIA,
+        'distinctive' => self::DISTINCTIVE,
+        'cultural' => self::CULTURAL,
+        'ethnic' => self::ETHNIC,
+        'liability' => self::LIABILITY,
+        'universe'=> self::UNIVERSE
     ];
 
     use IdTrait;
