@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -17,6 +18,14 @@ class Attribute
     use DescriptionTrait;
 
     /**
+     * @ORM\Column()
+     * @Assert\Type("string")
+     * @Assert\Length(min=2)
+     * @Assert\Length(max=3)
+     */
+    private $shortname;
+
+    /**
      * @ORM\Column(name="isPrimary", type="boolean", options={"default":"0"})
      */
     private $isPrimary = true;
@@ -29,5 +38,17 @@ class Attribute
     public function setIsPrimary($isPrimary)
     {
         $this->isPrimary = $isPrimary;
+    }
+
+    public function setShortName($shortname)
+    {
+        $this->shortname = $shortname;
+
+        return $this;
+    }
+
+    public function getShortName()
+    {
+        return $this->shortname;
     }
 }

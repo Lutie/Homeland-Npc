@@ -23,6 +23,10 @@ class AttributeType extends AbstractType
                 'label' => 'entity.particularity.description',
                 'required' => false,
             ])
+            ->add('shortname', TextType::class, [
+                'label' => 'entity.particularity.shortname',
+                'required' => false,
+            ])
             ->add('isPrimary', CheckboxType::class, [
                 'label' => 'entity.particularity.isprimary',
             ]);

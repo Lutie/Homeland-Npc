@@ -48,7 +48,7 @@ class DefaultController extends AbstractController
 
             $this->addFlash('success', 'The character "' . $character->getName() . '" has been created.');
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('default_index');
         }
 
         return $this->render('create.html.twig', [
@@ -71,7 +71,7 @@ class DefaultController extends AbstractController
 
             $this->addFlash('success', 'The character "' . $character->getName() . '" has been modified.');
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('default_index');
         }
 
         return $this->render('create.html.twig', [
@@ -90,7 +90,7 @@ class DefaultController extends AbstractController
 
         $this->addFlash('success', 'The character "' . $character->getName() . '" has been deleted.');
 
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('default_index');
     }
 
     /**
@@ -104,20 +104,28 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/export/{id}", name="default_export")
+     * @Route("/export/{id}", requirements={"id":"\d+"}, name="default_export")
      */
     public function exportAction(Character $character)
     {
-        $this->generatePdf($character);
-    }
-
-    function generatePdf(Character $character) {
         $html = $this->renderView('pdf/character_sheet.html.twig', [
             'data' => $character,
         ]);
 
         $pdfRender = new PdfRender;
         $pdfRender->generatePdf($html, $character->getName() . " sheet");
+
+        return $this->redirectToRoute('default_index');
+    }
+
+    /**
+     * @Route("/preview/{id}", requirements={"id":"\d+"}, name="default_preview")
+     */
+    public function previewAction(Character $character)
+    {
+        return $this->render('pdf/character_sheet.html.twig', [
+            'data' => $character,
+        ]);
     }
  
     /**
@@ -130,20 +138,73 @@ class DefaultController extends AbstractController
 
         $subject = $request->query->get('subject');
 
-        //if (in_array($subject, ['universe', 'all'])) $size = $this->getRandom(Particularity::class, 15);
+        if (in_array($subject, ['defaults', 'all'])) {
+            if (rand(0, 100) < 66) $defaults[] = $this->getRandom(Particularity::class, 0);
+            if (rand(0, 100) < 33) $defaults[] = $this->getRandom(Particularity::class, 0);
+        }
+        
+        if (in_array($subject, ['ethnic', 'all'])) $ethnic = $this->getRandom(Particularity::class, 1);
 
-        //if (in_array($subject, ['particularities', 'all'])) {
-        //    if (rand(0, 100) < 66) $particularities[] = $this->getRandom(Particularity::class, 0);
-        //    if (rand(0, 100) < 33) $particularities[] = $this->getRandom(Particularity::class, 0);
-        //}
-        //if (in_array($subject, ['liabilities', 'all'])) {
-        //    if (rand(0, 100) < 66) $liabilities[] = $this->getRandom(Liability::class, 0);
-        //    if (rand(0, 100) < 33) $liabilities[] = $this->getRandom(Liability::class, 0);
-        //}
+        if (in_array($subject, ['morphologies', 'all'])) {
+            if (rand(0, 100) < 66) $morphologies[] = $this->getRandom(Particularity::class, 2);
+            if (rand(0, 100) < 33) $morphologies[] = $this->getRandom(Particularity::class, 2);
+        }
+        
+        if (in_array($subject, ['occupation', 'all'])) $occupation = $this->getRandom(Particularity::class, 3);
+        
+        if (in_array($subject, ['job', 'all'])) $job = $this->getRandom(Particularity::class, 4);
+        
+        if (in_array($subject, ['character', 'all'])) $character = $this->getRandom(Particularity::class, 5);
+        
+        if (in_array($subject, ['alignement', 'all'])) $alignement = $this->getRandom(Particularity::class, 6);
+        
+        if (in_array($subject, ['persona', 'all'])) $persona = $this->getRandom(Particularity::class, 7);
+
+        if (in_array($subject, ['manias', 'all'])) {
+            if (rand(0, 100) < 66) $manias[] = $this->getRandom(Particularity::class, 8);
+            if (rand(0, 100) < 33) $manias[] = $this->getRandom(Particularity::class, 8);
+        }
+
+        if (in_array($subject, ['distinctives', 'all'])) {
+            if (rand(0, 100) < 66) $distinctives[] = $this->getRandom(Particularity::class, 9);
+            if (rand(0, 100) < 33) $distinctives[] = $this->getRandom(Particularity::class, 9);
+        }
+
+        if (in_array($subject, ['culturals', 'all'])) {
+            if (rand(0, 100) < 66) $culturals[] = $this->getRandom(Particularity::class, 10);
+            if (rand(0, 100) < 33) $culturals[] = $this->getRandom(Particularity::class, 10);
+        }
+
+        if (in_array($subject, ['liabilities', 'all'])) {
+            if (rand(0, 100) < 66) $liabilities[] = $this->getRandom(Particularity::class, 11);
+            if (rand(0, 100) < 33) $liabilities[] = $this->getRandom(Particularity::class, 11);
+        }
+        
+        //if (in_array($subject, ['universe', 'all'])) $universe = $this->getRandom(Particularity::class, 12);
+        
+        if (in_array($subject, ['size', 'all'])) $size = $this->getRandom(Particularity::class, 13);
+        
+        if (in_array($subject, ['stature', 'all'])) $stature = $this->getRandom(Particularity::class, 14);
 
         $data = [
             'age' => $age,
-            'sex' => $sex
+            'sex' => $sex,
+            'defaults' => isset($defaults) ? $defaults : null,
+            'defaults' => isset($ethnic) ? $ethnic : null,
+            'defaults' => isset($morphologies) ? $morphologies : null,
+            'defaults' => isset($occupation) ? $occupation : null,
+            'defaults' => isset($job) ? $job : null,
+            'defaults' => isset($character) ? $character : null,
+            'defaults' => isset($alignement) ? $alignement : null,
+            'defaults' => isset($persona) ? $persona : null,
+            'defaults' => isset($manias) ? $manias : null,
+            'defaults' => isset($distinctives) ? $distinctives : null,
+            'defaults' => isset($culturals) ? $culturals : null,
+            'defaults' => isset($liabilities) ? $liabilities : null,
+            'defaults' => isset($culturals) ? $culturals : null,
+            'defaults' => isset($universe) ? $universe : null,
+            'defaults' => isset($size) ? $size : null,
+            'defaults' => isset($stature) ? $stature : null,
         ];
 
         return new JsonResponse($data);

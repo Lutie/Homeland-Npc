@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-trait DescriptionTrait
+trait SummaryTrait
 {
     /**
      * @ORM\Column()
@@ -13,17 +13,17 @@ trait DescriptionTrait
      * @Assert\Type("string")
      * @Assert\Length(min=10)
      */
-    private $description;
+    private $summary;
 
-    public function setDescription($description)
+    public function setSummary($summary)
     {
-        $this->description = $description;
+        $this->summary = $summary;
 
         return $this;
     }
 
-    public function getDescription()
+    public function getSummary()
     {
-        return $this->description;
+        return $this->summary;
     }
 }

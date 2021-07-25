@@ -13,39 +13,37 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Particularity
 {
     const DEFAULT = 0;
-    const HEAR_COLOR = 1;
-    const HEAR_STYLE = 2;
-    const EYE_COLOR = 3;
-    const CHARACTER = 4;
-    const ALIGNEMENT = 5;
-    const PERSONALITY = 6;
-    const ATTITUDE = 7;
-    const JOB = 8;
-    const OCCUPATION = 9;
-    const MANIA = 10;
-    const DISTINCTIVE = 11;
-    const CULTURAL = 12;
-    const ETHNIC = 13;
-    const LIABILITY = 14;
-    const UNIVERSE = 15;
+    const ETHNIC = 1;
+    const MORPHOLOGY = 2;
+    const OCCUPATION = 3;
+    const JOB = 4;
+    const CHARACTER = 5;
+    const ALIGNEMENT = 6;
+    const PERSONA = 7;
+    const MANIA = 8;
+    const DISTINCTIVE = 9;
+    const CULTURAL = 10;
+    const LIABILITY = 11;
+    const UNIVERSE = 12;
+    const SIZE = 13;
+    const STATURE = 14;
 
     const PARTICULARITY_TYPES = [
         'default' => self::DEFAULT,
-        'hearcolor' => self::HEAR_COLOR,
-        'hearstyle' => self::HEAR_STYLE,
-        'eyecolor' => self::EYE_COLOR,
+        'ethnic' => self::ETHNIC,
+        'morphology' => self::MORPHOLOGY,
+        'occupation' => self::OCCUPATION,
+        'job' => self::JOB,
         'character' => self::CHARACTER,
         'alignement' => self::ALIGNEMENT,
-        'personality' => self::PERSONALITY,
-        'attitude' => self::ATTITUDE,
-        'job' => self::JOB,
-        'occupation' => self::OCCUPATION,
+        'persona' => self::PERSONA,
         'mania' => self::MANIA,
         'distinctive' => self::DISTINCTIVE,
         'cultural' => self::CULTURAL,
-        'ethnic' => self::ETHNIC,
         'liability' => self::LIABILITY,
-        'universe'=> self::UNIVERSE
+        'universe' => self::UNIVERSE,
+        'size' => self::SIZE,
+        'stature' => self::STATURE
     ];
 
     use IdTrait;

@@ -26,9 +26,11 @@ class Character
 
     use DescriptionTrait;
 
-    use AttributesTrait;
+    use SummaryTrait;
 
     use ParticularityTrait;
+
+    use AttributesTrait;
 
     /**
      * @ORM\Column()
@@ -65,6 +67,25 @@ class Character
      * @Assert\Type("integer")
      */
     private $age;
+
+    /**
+     * Only for form purpose
+     */
+    public $defaults;
+    public $ethnic;
+    public $morphologies;
+    public $occupation;
+    public $job;
+    public $character;
+    public $alignement;
+    public $persona;
+    public $manias;
+    public $distinctives;
+    public $culturals;
+    public $liabilities;
+    public $universe;
+    public $size;
+    public $stature;
 
     public function __construct()
     {
@@ -127,4 +148,5 @@ class Character
     {
         $this->age = $age;
     }
+
 }

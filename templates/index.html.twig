@@ -11,7 +11,7 @@
                 <td>Sex</td>
                 <td>Age</td>
                 <td>Created At</td>
-                <td colspan="3">
+                <td colspan="4">
                     <a href="{{ path('default_create') }}"
                         class="btn btn-success btn-block">Create</a>
                 </td>
@@ -30,8 +30,11 @@
                     <td>{{ char.age }}</td>
                     <td>{{ char.createAt|date("d/m/Y") }}</td>
                     <td>
-                        <a href="{{path('default_export', {id:char.id})}}"
-                        class="btn btn-primary btn-block">Export</a></td>
+                        <a href="{{path('default_preview', {id:char.id})}}" target="_blank"
+                        class="btn btn-primary btn-block"><i class="fas fa-file-pdf fa-2x"></i></a></td>
+                    <td>
+                        <a href="{{path('default_export', {id:char.id})}}" target="_blank"
+                        class="btn btn-primary btn-block"><i class="fas fa-file-pdf fa-2x"></i></a></td>
                     <td>
                         <a href="{{path('default_update', {id:char.id})}}"
                         class="btn btn-warning btn-block">Update</a></td>

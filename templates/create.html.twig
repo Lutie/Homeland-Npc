@@ -11,16 +11,25 @@
     <div class="row">
         <div class="col-xs-3"> {{ form_row(form.firstname) }} </div>
         <div class="col-xs-3"> {{ form_row(form.lastname) }} </div>
-        <div class="col-xs-2"> {{ form_row(form.age) }} </div>
-        <div class="row col-xs-1">
-            <div id="random_age" class="btn btn-warning" data-api="{{ random_route }}"><i class="fas fa-dice"></i></div>
-            <div id="lock_age" class="btn btn-primary"><i class="fas fa-lock-open"></i></div>
-        </div>
-        <div class="col-xs-2">{{ form_row(form.sex) }} </div>
-        <div class="row col-xs-1">
-            <div id="random_sex" class="btn btn-warning" data-api="{{ random_route }}"><i class="fas fa-dice"></i></div>
-            <div id="lock_sex" class="btn btn-primary"><i class="fas fa-lock-open"></i></div>
-        </div>
+
+        {% include '_field.html.twig' with {'subject': 'age', 'form': form.age, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'sex', 'form': form.sex, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'defaults', 'form': form.defaults, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'ethnic', 'form': form.ethnic, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'morphologies', 'form': form.morphologies, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'occupation', 'form': form.occupation, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'job', 'form': form.job, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'character', 'form': form.character, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'alignement', 'form': form.alignement, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'persona', 'form': form.persona, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'manias', 'form': form.manias, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'distinctives', 'form': form.distinctives, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'culturals', 'form': form.culturals, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'liabilities', 'form': form.liabilities, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'universe', 'form': form.universe, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'size', 'form': form.size, 'random_route': random_route} only %}
+        {% include '_field.html.twig' with {'subject': 'stature', 'form': form.stature, 'random_route': random_route} only %}
+
     </div>
     <div class="row">
         <div class="col-xs-3"> {{ form_row(form.description) }} </div>
@@ -28,8 +37,8 @@
 
     <button type="submit" class="btn btn-primary">{{ character.id ? 'Update' : 'Create' }}</button>
     <a href="{{ path('default_index') }}"
-       class="btn btn-primary">Cancel</a>
-    <div id="random_all" data-api="{{ random_route }}" class="btn btn-warning">Randomize</div>
+       class="btn btn-danger">Cancel</a>
+    <div id="random_all" data-api="{{ random_route }}" class="btn btn-warning">Full Randomize</div>
     {{ form_end(form) }}
 
 {% endblock %}

@@ -29,7 +29,7 @@
                         {{ item.description }}
                     </td>
                     <td>
-                        <a href=""
+                        <a href="{{path('config_' ~ subject ~ '_update', {id:item.id})}}"
                         class="btn btn-warning btn-block">Update</a></td>
                     <td>
                         <a href=""
