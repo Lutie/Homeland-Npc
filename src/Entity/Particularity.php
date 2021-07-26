@@ -28,22 +28,40 @@ class Particularity
     const SIZE = 13;
     const STATURE = 14;
 
-    const PARTICULARITY_TYPES = [
-        'default' => self::DEFAULT,
+    const PARTICULARITY_TYPES_BY_STR = [
+        'defaults' => self::DEFAULT,
         'ethnic' => self::ETHNIC,
-        'morphology' => self::MORPHOLOGY,
+        'morphologies' => self::MORPHOLOGY,
         'occupation' => self::OCCUPATION,
         'job' => self::JOB,
         'character' => self::CHARACTER,
         'alignement' => self::ALIGNEMENT,
         'persona' => self::PERSONA,
-        'mania' => self::MANIA,
-        'distinctive' => self::DISTINCTIVE,
+        'manias' => self::MANIA,
+        'distinctives' => self::DISTINCTIVE,
         'cultural' => self::CULTURAL,
-        'liability' => self::LIABILITY,
+        'liabilities' => self::LIABILITY,
         'universe' => self::UNIVERSE,
         'size' => self::SIZE,
         'stature' => self::STATURE
+    ];
+
+    const PARTICULARITY_TYPES_BY_INT = [
+        self::DEFAULT => 'defaults',
+        self::ETHNIC => 'ethnic',
+        self::MORPHOLOGY => 'morphologies',
+        self::OCCUPATION => 'occupation',
+        self::JOB => 'job',
+        self::CHARACTER => 'character',
+        self::ALIGNEMENT => 'alignement',
+        self::PERSONA => 'persona',
+        self::MANIA => 'manias',
+        self::DISTINCTIVE => 'distinctives',
+        self::CULTURAL => 'cultural',
+        self::LIABILITY => 'liabilities',
+        self::UNIVERSE => 'universe',
+        self::SIZE => 'size',
+        self::STATURE => 'stature'
     ];
 
     use IdTrait;

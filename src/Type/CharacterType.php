@@ -27,11 +27,14 @@ class CharacterType extends AbstractType
                 'label' => 'entity.character.lastname',
             ])
             ->add('sex', ChoiceType::class, [
-                'choices' => Character::SEX_TYPES,
+                'choices' => Character::SEX_TYPES_BY_STR,
                 'label' => 'entity.character.sex'
             ])
             ->add('age', IntegerType::class, [
                 'label' => 'entity.character.age',
+            ])
+            ->add('summary', TextareaType::class, [
+                'label' => 'entity.character.summary',
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'entity.character.description',
@@ -120,10 +123,9 @@ class CharacterType extends AbstractType
                         ->where('particularity.type = 9');
                 },
             ])
-            ->add('culturals', EntityType::class, [
-                'label' => 'entity.character.culturals',
+            ->add('cultural', EntityType::class, [
+                'label' => 'entity.character.cultural',
                 'class' => Particularity::class,
-                'multiple' => true,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('particularity')
                         ->where('particularity.type = 10');

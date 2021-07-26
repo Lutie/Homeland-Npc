@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ParticularityType extends AbstractType
@@ -19,12 +20,12 @@ class ParticularityType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'label' => 'entity.particularity.type',
-                'choices' => Particularity::PARTICULARITY_TYPES,
+                'choices' => Particularity::PARTICULARITY_TYPES_BY_STR,
             ])
             ->add('name', TextType::class, [
                 'label' => 'entity.particularity.name',
             ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'entity.particularity.description',
                 'required' => false,
             ])

@@ -13,6 +13,7 @@
             <thead>
             <td>Name</td>
             <td>Description</td>
+            <td></td>
             <td colspan="2">
                 <a href="{{ path('config_' ~ subject ~ '_create') }}"
                     class="btn btn-success btn-block">Create</a>
@@ -20,6 +21,7 @@
             </thead>
 
             <tbody>
+            {% set PARTICULARITY_TYPES_BY_INT = constant('App\\Entity\\Particularity::PARTICULARITY_TYPES_BY_INT') %}
             {% for item in data %}
                 <tr>
                     <td>
@@ -29,10 +31,18 @@
                         {{ item.description }}
                     </td>
                     <td>
+                        {% if item.type is defined %}
+                            {{ PARTICULARITY_TYPES_BY_INT[item.type] }}
+                        {% endif %}
+                        {% if item.shortname is defined %}
+                            {{ item.shortname }}
+                        {% endif %}
+                    </td>
+                    <td>
                         <a href="{{path('config_' ~ subject ~ '_update', {id:item.id})}}"
                         class="btn btn-warning btn-block">Update</a></td>
                     <td>
-                        <a href=""
+                        <a href="{{path('config_' ~ subject ~ '_delete', {id:item.id})}}"
                         class="btn btn-danger btn-block">Delete</a></td>
                 </tr>
             {% endfor %}

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Character;
+use App\Entity\Particularity;
 use App\Type\CharacterType;
 use App\Service\PdfRender;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,7 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $character = $this->hydrateCharacterFromForm($character, $form);
             $this->em->persist($character);
             $this->em->flush();
 
@@ -62,10 +64,14 @@ class DefaultController extends AbstractController
      */
     public function updateAction(Request $request, Character $character)
     {
+        $this->hydrateCharacterFromEntity($character);
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 
+        $this->hydrateCharacterFromEntity($character);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $character = $this->hydrateCharacterFromForm($character, $form);
             $this->em->persist($character);
             $this->em->flush();
 
@@ -78,6 +84,76 @@ class DefaultController extends AbstractController
             'form' => $form->createView(),
             'character' => $character
         ]);
+    }
+
+    private function hydrateCharacterFromForm($character, $form)
+    {
+        $params = Particularity::PARTICULARITY_TYPES_BY_STR;
+        $character->clearParticularities();
+        foreach ($params as $key => $param) {
+            if ($form[$key]->getData())
+                $character->addParticularities($form[$key]->getData());
+        }
+        return $character;
+    }
+
+    private function hydrateCharacterFromEntity($character)
+    {
+        foreach ($character->getParticularities() as $particularity) {
+            switch($particularity->getType()) {
+                case Particularity::DEFAULT:
+                    if(!in_array($particularity, $character->defaults))
+                        $character->defaults[] = $particularity;
+                    break;
+                case Particularity::ETHNIC:
+                    $character->ethnic = $particularity;
+                    break;
+                case Particularity::MORPHOLOGY:
+                    if(!in_array($particularity, $character->morphologies))
+                        $character->morphologies[] = $particularity;
+                    break;
+                case Particularity::OCCUPATION:
+                    $character->occupation = $particularity;
+                    break;
+                case Particularity::JOB:
+                    $character->job = $particularity;
+                    break;
+                case Particularity::CHARACTER:
+                    $character->character = $particularity;
+                    break;
+                case Particularity::ALIGNEMENT:
+                    $character->alignement = $particularity;
+                    break;
+                case Particularity::PERSONA:
+                    $character->persona = $particularity;
+                    break;
+                case Particularity::MANIA:
+                    if(!in_array($particularity, $character->manias))
+                        $character->manias[] = $particularity;
+                    break;
+                case Particularity::DISTINCTIVE:
+                    if(!in_array($particularity, $character->distinctives))
+                        $character->distinctives[] = $particularity;
+                    break;
+                case Particularity::CULTURAL:
+                    $character->cultural = $particularity;
+                    break;
+                case Particularity::LIABILITY:
+                    if(!in_array($particularity, $character->liabilities))
+                        $character->liabilities[] = $particularity;
+                    break;
+                case Particularity::UNIVERSE:
+                    $character->universe = $particularity;
+                    break;
+                case Particularity::SIZE:
+                    $character->size = $particularity;
+                    break;
+                case Particularity::STATURE:
+                    $character->stature = $particularity;
+                    break;
+            }
+        }
+        return $character;
     }
 
     /**
@@ -108,6 +184,7 @@ class DefaultController extends AbstractController
      */
     public function exportAction(Character $character)
     {
+        $this->hydrateCharacterFromEntity($character);
         $html = $this->renderView('pdf/character_sheet.html.twig', [
             'data' => $character,
         ]);
@@ -123,6 +200,7 @@ class DefaultController extends AbstractController
      */
     public function previewAction(Character $character)
     {
+        $this->hydrateCharacterFromEntity($character);
         return $this->render('pdf/character_sheet.html.twig', [
             'data' => $character,
         ]);
@@ -180,7 +258,7 @@ class DefaultController extends AbstractController
             if (rand(0, 100) < 33) $liabilities[] = $this->getRandom(Particularity::class, 11);
         }
         
-        //if (in_array($subject, ['universe', 'all'])) $universe = $this->getRandom(Particularity::class, 12);
+        if (in_array($subject, ['universe', 'all'])) $universe = $this->getRandom(Particularity::class, 12);
         
         if (in_array($subject, ['size', 'all'])) $size = $this->getRandom(Particularity::class, 13);
         
@@ -190,31 +268,29 @@ class DefaultController extends AbstractController
             'age' => $age,
             'sex' => $sex,
             'defaults' => isset($defaults) ? $defaults : null,
-            'defaults' => isset($ethnic) ? $ethnic : null,
-            'defaults' => isset($morphologies) ? $morphologies : null,
-            'defaults' => isset($occupation) ? $occupation : null,
-            'defaults' => isset($job) ? $job : null,
-            'defaults' => isset($character) ? $character : null,
-            'defaults' => isset($alignement) ? $alignement : null,
-            'defaults' => isset($persona) ? $persona : null,
-            'defaults' => isset($manias) ? $manias : null,
-            'defaults' => isset($distinctives) ? $distinctives : null,
-            'defaults' => isset($culturals) ? $culturals : null,
-            'defaults' => isset($liabilities) ? $liabilities : null,
-            'defaults' => isset($culturals) ? $culturals : null,
-            'defaults' => isset($universe) ? $universe : null,
-            'defaults' => isset($size) ? $size : null,
-            'defaults' => isset($stature) ? $stature : null,
+            'ethnic' => isset($ethnic) ? $ethnic : null,
+            'morphologies' => isset($morphologies) ? $morphologies : null,
+            'occupation' => isset($occupation) ? $occupation : null,
+            'job' => isset($job) ? $job : null,
+            'character' => isset($character) ? $character : null,
+            'alignement' => isset($alignement) ? $alignement : null,
+            'persona' => isset($persona) ? $persona : null,
+            'manias' => isset($manias) ? $manias : null,
+            'distinctives' => isset($distinctives) ? $distinctives : null,
+            'culturals' => isset($culturals) ? $culturals : null,
+            'liabilities' => isset($liabilities) ? $liabilities : null,
+            'culturals' => isset($culturals) ? $culturals : null,
+            'universe' => isset($universe) ? $universe : null,
+            'size' => isset($size) ? $size : null,
+            'stature' => isset($stature) ? $stature : null,
         ];
 
         return new JsonResponse($data);
-
     }
 
     private function getRandom($class, $type)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository($class);
+        $repository = $this->em->getRepository($class);
 
         if ($type != 0) {
             $list = $repository->findBy(['type' => $type], ['ratio' => 'DESC']);
@@ -235,6 +311,6 @@ class DefaultController extends AbstractController
             }
         }
 
-        return $proprety->getId();
+        return isset($proprety) ? $proprety->getId() : null;
     }
 }

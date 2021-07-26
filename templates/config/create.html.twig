@@ -21,12 +21,18 @@
         {% if form.value is defined %}
             <div class="col-xs-3"> {{ form_row(form.value) }} </div>
         {% endif %}
+        {% if form.shortname is defined %}
+            <div class="col-xs-3"> {{ form_row(form.shortname) }} </div>
+        {% endif %}
+        {% if form.isPrimary is defined %}
+            <div class="col-xs-3"> {{ form_row(form.isPrimary) }} </div>
+        {% endif %}
         {% if form.attributes is defined %}
             <div class="col-xs-3"> {{ form_row(form.attributes) }} </div>
         {% endif %}
     </div>
     <div class="row">
-        <div class="col-xs-12"> {{ form_row(form.description) }} </div>
+        <div class="col-xs-12"> {{ form_row(form.description, { 'attr': {'cols': '100'}}) }} </div>
     </div>
     <button type="submit" class="btn btn-primary">{{ data.id ? 'Update' : 'Create' }}</button>
     <a href="{{ path('config_' ~ subject) }}"

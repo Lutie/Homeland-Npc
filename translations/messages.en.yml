@@ -1,0 +1,31 @@
+entity:
+  character:
+    firstname: Firstname
+    lastname: Lastname
+    summary: Summary
+    age: Age
+    sex: Sex
+    defaults: Defaults
+    ethnic: Ethnic
+    morphologies: Morphologies
+    occupation: Occupation
+    job: Job
+    character: Character
+    alignement: Alignement
+    persona: Persona
+    manias: Manias
+    distinctives: Distinctives
+    cultural: Cultural
+    liabilities: Liabilities
+    universe: Universe
+    size: Size
+    stature: Stature
+    description: Description
+    attribute: Attribute
+  particularity:
+    name: Name
+    Type: Type
+    ratio: Ratio
+    description: Description
+    shortname: Shortname
+    isprimary: Is Primary ?

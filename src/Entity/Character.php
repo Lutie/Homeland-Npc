@@ -16,10 +16,16 @@ class Character
     const SEX_MALE = 1;
     const SEX_FEMALE = 2;
 
-    const SEX_TYPES = [
+    const SEX_TYPES_BY_STR = [
         'male' => self::SEX_MALE,
         'female' => self::SEX_FEMALE,
         'unknown' => self::SEX_UNDEFINED
+    ];
+
+    const SEX_TYPES_BY_INT = [
+        self::SEX_MALE => 'male',
+        self::SEX_FEMALE => 'female',
+        self::SEX_UNDEFINED => 'unknown'
     ];
 
     use IdTrait;
@@ -66,23 +72,23 @@ class Character
      * @Assert\NotNull()
      * @Assert\Type("integer")
      */
-    private $age;
+    private $age = 18;
 
     /**
      * Only for form purpose
      */
-    public $defaults;
+    public $defaults = [];
     public $ethnic;
-    public $morphologies;
+    public $morphologies = [];
     public $occupation;
     public $job;
     public $character;
     public $alignement;
     public $persona;
-    public $manias;
-    public $distinctives;
-    public $culturals;
-    public $liabilities;
+    public $manias = [];
+    public $distinctives = [];
+    public $cultural;
+    public $liabilities = [];
     public $universe;
     public $size;
     public $stature;

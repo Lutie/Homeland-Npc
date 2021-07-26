@@ -8,8 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {# Bootstrap v4.0.0 #}
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
     <title>None Player Character Sheet</title>
 
@@ -21,9 +20,68 @@
 
 </head>
 <body>
-
+    {% set SEX_TYPES_BY_INT = constant('App\\Entity\\Character::SEX_TYPES_BY_INT') %}
     <p>Name : {{data.firstname}}</p>
-    <p>Description : {{data.description}}</p>
+    <p>Bio : Age {{data.age}}, Sex {{data.sex ? SEX_TYPES_BY_INT[data.sex] : 'x'}}</p>
+    {% if data.summary %}
+        <p>Summary : {{data.summary}}</p>
+    {% endif %}
+    {% if data.ethnic.name is defined %}
+        <p>Ethnic : {{data.ethnic.name}}
+        {% if data.cultural.name is defined %}
+            Cultural : {{data.cultural.name}} ({{data.cultural.description}})
+        {% endif %}
+        </p>
+    {% endif %}
+    {% for particularity in data.defaults %}
+        {% if particularity.name %}
+            <p>Uncategorized : {{particularity.name}} ({{particularity.name}})</p>
+        {% endif %}
+    {% endfor %}
+    {% for particularity in data.morphologies %}
+        {% if particularity.name %}
+            <p>Morphology : {{particularity.name}} ({{particularity.description}})</p>
+        {% endif %}
+    {% endfor %}
+    {% for particularity in data.manias %}
+        {% if particularity.name %}
+            <p>Mania : {{particularity.name}} ({{particularity.description}})</p>
+        {% endif %}
+    {% endfor %}
+    {% for particularity in data.distinctives %}
+        {% if particularity.name %}
+            <p>Distinctive : {{particularity.name}} ({{particularity.description}})</p>
+        {% endif %}
+    {% endfor %}
+    {% for particularity in data.liabilities %}
+        {% if particularity.name %}
+            <p>Liability : {{particularity.name}} ({{particularity.description}})</p>
+        {% endif %}
+    {% endfor %}
+    {% if data.occupation %}
+        <p>Occupation : {{data.occupation.name}} ({{data.occupation.description}})</p>
+    {% endif %}
+    {% if data.job %}
+        <p>Job : {{data.job.name}} ({{data.job.description}})</p>
+    {% endif %}
+    {% if data.character %}
+        <p>Character : {{data.character.name}} ({{data.character.description}})</p>
+    {% endif %}
+    {% if data.alignement %}
+        <p>Alignement : {{data.alignement.name}} ({{data.alignement.description}})</p>
+    {% endif %}
+    {% if data.persona %}
+        <p>Persona : {{data.persona.name}} ({{data.persona.description}})</p>
+    {% endif %}
+    {% if data.size %}
+        <p>Size : {{data.size.name}} ({{data.size.description}})</p>
+    {% endif %}
+    {% if data.stature %}
+        <p>Stature : {{data.stature.name}} ({{data.stature.description}})</p>
+    {% endif %}
 
+    {% if data.description %}
+        <p>Description : {{data.description}}</p>
+    {% endif %}
 </body>
 </html>

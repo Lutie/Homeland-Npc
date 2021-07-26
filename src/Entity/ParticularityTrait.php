@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,10 +24,18 @@ trait ParticularityTrait
         $this->particularities = $particularities;
     }
 
-    public function addParticularities(Particularity $particularity)
+    public function addParticularities($particularity)
     {
-        if (!$this->particularities->contains($particularity)) {
-            $this->particularities->add($particularity);
+        if (is_array($particularity)) {
+            $array = $particularity;
+        } else {
+            $array = [$particularity];
+        }
+
+        foreach ($array as $value) {
+            if (!$this->particularities->contains($value)) {
+                $this->particularities->add($value);
+            }
         }
 
         return $this;
@@ -37,6 +46,13 @@ trait ParticularityTrait
         if ($this->particularities->contains($particularity)) {
             $this->particularities->removeElement($particularity);
         }
+
+        return $this;
+    }
+
+    public function clearParticularities()
+    {
+        $this->particularities = new ArrayCollection();
 
         return $this;
     }

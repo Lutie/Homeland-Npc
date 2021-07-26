@@ -13,7 +13,7 @@
                 <td>Created At</td>
                 <td colspan="4">
                     <a href="{{ path('default_create') }}"
-                        class="btn btn-success btn-block">Create</a>
+                        class="btn btn-success btn-block"><i class="fas fa-plus-square fa-2x"></i></a>
                 </td>
             </thead>
 
@@ -31,16 +31,16 @@
                     <td>{{ char.createAt|date("d/m/Y") }}</td>
                     <td>
                         <a href="{{path('default_preview', {id:char.id})}}" target="_blank"
-                        class="btn btn-primary btn-block"><i class="fas fa-file-pdf fa-2x"></i></a></td>
+                        class="btn btn-primary btn-block"><i class="fas fa-file-alt fa-2x"></i></a></td>
                     <td>
                         <a href="{{path('default_export', {id:char.id})}}" target="_blank"
                         class="btn btn-primary btn-block"><i class="fas fa-file-pdf fa-2x"></i></a></td>
                     <td>
                         <a href="{{path('default_update', {id:char.id})}}"
-                        class="btn btn-warning btn-block">Update</a></td>
+                        class="btn btn-warning btn-block"><i class="fas fa-edit fa-2x"></i></a></td>
                     <td>
                         <a href="{{path('default_delete', {id:char.id})}}"
-                        class="btn btn-danger btn-block">Delete</a></td>
+                        class="btn btn-danger btn-block"><i class="fas fa-trash-alt fa-2x"></i></a></td>
                 </tr>
             {% endfor %}
             </tbody>

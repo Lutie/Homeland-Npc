@@ -15,29 +15,27 @@ $(function () {
         });
     };
 
-    lockRandom($('#lock_age'));
-    lockRandom($('#lock_sex'));
+    // List of all character parameters which can be randomized
+    const values = ['age', 'sex', 'default', 'ethnic', 'morphologies', 'occupation', 'job', 'character', 'alignement', 'persona', 'manias', 'distinctives', 'culturals', 'liabilities', 'universe', 'size', 'stature']
+
+    values.forEach(value => {
+        lockRandom($('#lock_' + value));
+
+        $('#random_' + value).on('click', function () {
+            var url = $(this).data('api');
+            $.get(url, {subject: value}, function (data) {
+                console.log(data)
+                $('#character_' + value).val(data[value]);
+            });
+        });
+    })
 
     $('#random_all').on('click', function () {
         var url = $(this).data('api');
         $.get(url, {subject: 'all'}, function (data) {
-            if ($('#lock_age').hasClass('btn-primary')) $('#character_age').val(data.age);
-            if ($('#lock_sex').hasClass('btn-primary')) $('#character_sex').val(data.sex);
-        });
-    });
-
-    $('#random_age').on('click', function () {
-        var url = $(this).data('api');
-        $.get(url, {subject: 'age'}, function (data) {
-            console.log(data)
-            $('#character_age').val(data.age); //.change(); (peut être que ça ne fonctionnera plus avec select 2)
-        });
-    });
-
-    $('#random_sex').on('click', function () {
-        var url = $(this).data('api');
-        $.get(url, {subject: 'sex'}, function (data) {
-            $('#character_sex').val(data.sex);
+            values.forEach(value => {
+                if ($('#lock_' + value).hasClass('btn-primary')) $('#character_' + value).val(data[value]);
+            })
         });
     });
 
