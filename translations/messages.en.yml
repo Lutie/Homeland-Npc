@@ -24,8 +24,23 @@ entity:
     attribute: Attribute
   particularity:
     name: Name
-    Type: Type
+    type: Type
     ratio: Ratio
     description: Description
     shortname: Shortname
     isprimary: Is Primary ?
+defaults: defaults
+ethnic: ethnic
+morphologies: morphologies
+occupation: occupation
+job: job
+character: character
+alignement: alignement
+persona: persona
+manias: manias
+distinctives: distinctives
+cultural: cultural
+liabilities: liabilities
+universe: universe
+size: size
+stature: stature

@@ -1,0 +1,11 @@
+.navbar {
+    margin-bottom: 0px;
+}
+
+.divider {
+    margin: 32px 15%;
+    width: 80%;
+    height: 1px;
+    background-color: black;
+    opacity: 0.3;
+}

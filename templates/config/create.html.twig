@@ -5,34 +5,35 @@
 {% endblock %}
 
 {% block title %}{{ data.id ? 'Update' : 'Create' }} {{ subject }}{% endblock %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block body %}
 
     <h1>{{ data.id ? 'Update' : 'Create' }} {{ subject }} {{ data.name }}</h1>
     {{ form_start(form) }}
     <div class="row">
-        <div class="col-xs-3"> {{ form_row(form.name) }} </div>
+        {{ form_row(form.name) }}
         {% if form.type is defined %}
-            <div class="col-xs-3"> {{ form_row(form.type) }} </div>
+        {{ form_row(form.type) }}
         {% endif %}
         {% if form.ratio is defined %}
-            <div class="col-xs-3"> {{ form_row(form.ratio) }} </div>
+        {{ form_row(form.ratio) }}
         {% endif %}
         {% if form.value is defined %}
-            <div class="col-xs-3"> {{ form_row(form.value) }} </div>
+        {{ form_row(form.value) }}
         {% endif %}
         {% if form.shortname is defined %}
-            <div class="col-xs-3"> {{ form_row(form.shortname) }} </div>
+        {{ form_row(form.shortname) }}
         {% endif %}
         {% if form.isPrimary is defined %}
-            <div class="col-xs-3"> {{ form_row(form.isPrimary) }} </div>
+        {{ form_row(form.isPrimary) }}
         {% endif %}
         {% if form.attributes is defined %}
-            <div class="col-xs-3"> {{ form_row(form.attributes) }} </div>
+        {{ form_row(form.attributes) }}
         {% endif %}
     </div>
     <div class="row">
-        <div class="col-xs-12"> {{ form_row(form.description, { 'attr': {'cols': '100'}}) }} </div>
+        <div class="col-12"> {{ form_row(form.description, { 'attr': {'cols': '100'}}) }} </div>
     </div>
     <button type="submit" class="btn btn-primary">{{ data.id ? 'Update' : 'Create' }}</button>
     <a href="{{ path('config_' ~ subject) }}"
