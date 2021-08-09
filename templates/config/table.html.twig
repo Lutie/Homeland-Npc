@@ -7,13 +7,30 @@
 {% block body %}
     <h1>{{subject|capitalize}}</h1>
     </br>
+    {% if subject == "particularity" %}
+        <form action="{{ path('config_particularity') }}" method="GET">
+            <select name="filter" id="filter">
+                <option value="">--None--</option>
+                {% for key, value in constant('App\\Entity\\Particularity::PARTICULARITY_TYPES_BY_STR') %}
+                    <option value="{{value}}">{{key}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" name="submit">Filter</button>
+        </form>
+    {% endif %}
     <div class="table-responsive table-hover">
         <table class="table table-bordered table-striped">
 
             <thead>
             <td>Name</td>
             <td>Description</td>
-            <td></td>
+            {% if subject == "particularity" %}
+            <td>Type</td>
+            <td>Attribute(s)</td>
+            <td>Ratio</td>
+            {% else %}
+            <td>Shortname</td>
+            {% endif %}
             <td colspan="2">
                 <a href="{{ path('config_' ~ subject ~ '_create') }}"
                     class="btn btn-success btn-block">Create</a>
@@ -30,14 +47,28 @@
                     <td>
                         {{ item.description }}
                     </td>
+                    {% if item.type is defined %}
                     <td>
-                        {% if item.type is defined %}
-                            {{ PARTICULARITY_TYPES_BY_INT[item.type] }}
-                        {% endif %}
-                        {% if item.shortname is defined %}
-                            {{ item.shortname }}
-                        {% endif %}
+                        {{ PARTICULARITY_TYPES_BY_INT[item.type] }}
                     </td>
+                    {% endif %}
+                    {% if item.shortname is defined %}
+                    <td>
+                        {{ item.shortname }}
+                    </td>
+                    {% endif %}
+                    {% if item.attributes is defined %}
+                    <td>
+                        {% for attribute in item.attributes %}
+                            {{ attribute.shortname }}
+                        {% endfor %}
+                    </td>
+                    {% endif %}
+                    {% if item.ratio is defined %}
+                    <td>
+                        {{ item.ratio }}
+                    </td>
+                    {% endif %}
                     <td>
                         <a href="{{path('config_' ~ subject ~ '_update', {id:item.id})}}"
                         class="btn btn-warning btn-block">Update</a></td>

@@ -92,6 +92,8 @@ class Character
     public $universe;
     public $size;
     public $stature;
+    public $qualities = [];
+    public $ideal;
 
     public function __construct()
     {

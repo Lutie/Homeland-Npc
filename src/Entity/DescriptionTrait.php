@@ -9,9 +9,7 @@ trait DescriptionTrait
 {
     /**
      * @ORM\Column()
-     * @Assert\NotNull()
      * @Assert\Type("string")
-     * @Assert\Length(min=10)
      */
     private $description;
 

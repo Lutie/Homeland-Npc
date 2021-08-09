@@ -22,6 +22,8 @@ entity:
     stature: Stature
     description: Description
     attribute: Attribute
+    ideal: Ideal
+    qualities: Qualities
   particularity:
     name: Name
     type: Type

@@ -41,10 +41,14 @@ class ConfigController extends AbstractController
     /**
      * @Route("/particularity", name="config_particularity")
      */
-    public function particularityAction()
+    public function particularityAction(Request $request)
     {
         $repository = $this->em->getRepository(Particularity::class);
-        $data = $repository->findAll();
+        if ($request->query->get('filter')) {
+            $data = $repository->findBy(['type' => $request->query->get('filter')]);
+        } else {
+            $data = $repository->findAll();
+        }
 
         return $this->render('config/table.html.twig', [
             'subject' => 'particularity',
@@ -53,7 +57,7 @@ class ConfigController extends AbstractController
     }
 
     /**
-     * @Route("/particularity/create", name="config_particularity_create")
+     * @Route("/particularity/create/", name="config_particularity_create")
      */
     public function particularityCreateAction(Request $request)
     {
@@ -67,8 +71,14 @@ class ConfigController extends AbstractController
 
             $this->addFlash('success', 'The particularity "' . $data->getName() . '" has been created.');
 
-            return $this->redirectToRoute('config_particularity');
+            if (is_callable([$data, 'getType'])) {
+                $type = $data->getType();
+            }
+
+            return $form->get('saveAndNew')->isClicked() ? $this->redirectToRoute('config_particularity_create', ['type' => $type]) : $this->redirectToRoute('config_particularity');
         }
+
+        $form->get('type')->setData($request->query->get('type'));
 
         return $this->render('config/create.html.twig', [
             'subject' => 'particularity',
@@ -129,8 +139,6 @@ class ConfigController extends AbstractController
         $repository = $this->em->getRepository(Attribute::class);
         $data = $repository->findAll();
 
-        dump($data);
-
         return $this->render('config/table.html.twig', [
             'subject' => 'attribute',
             'data' => $data
@@ -152,7 +160,11 @@ class ConfigController extends AbstractController
 
             $this->addFlash('success', 'The attribute "' . $data->getName() . '" has been created.');
 
-            return $this->redirectToRoute('config_attribute');
+            if (is_callable([$data, 'getType'])) {
+                $type = $data->getType();
+            }
+
+            return $form->get('saveAndNew')->isClicked() ? $this->redirectToRoute('config_attribute_create') : $this->redirectToRoute('config_attribute');
         }
 
         return $this->render('config/create.html.twig', [

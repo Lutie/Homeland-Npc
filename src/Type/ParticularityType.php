@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ParticularityType extends AbstractType
@@ -32,10 +33,19 @@ class ParticularityType extends AbstractType
             ->add('attributes', EntityType::class, [
                 'label' => 'entity.character.attribute',
                 'class' => Attribute::class,
+                'required' => false,
                 'multiple' => true
             ])
             ->add('ratio', IntegerType::class, [
                 'label' => 'entity.particularity.ratio',
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr'   =>  ['class' => 'btn btn-primary']
+            ])
+            ->add('saveAndNew', SubmitType::class, [
+                'label' => 'Save and add another',
+                'attr'   =>  ['class' => 'btn btn-primary']
             ]);
     }
 

@@ -27,6 +27,8 @@ class Particularity
     const UNIVERSE = 12;
     const SIZE = 13;
     const STATURE = 14;
+    const QUALITY = 15;
+    const IDEAL = 16;
 
     const PARTICULARITY_TYPES_BY_STR = [
         'defaults' => self::DEFAULT,
@@ -43,7 +45,9 @@ class Particularity
         'liabilities' => self::LIABILITY,
         'universe' => self::UNIVERSE,
         'size' => self::SIZE,
-        'stature' => self::STATURE
+        'stature' => self::STATURE,
+        'quality' => self::QUALITY,
+        'ideal' => self::IDEAL
     ];
 
     const PARTICULARITY_TYPES_BY_INT = [
@@ -61,7 +65,9 @@ class Particularity
         self::LIABILITY => 'liabilities',
         self::UNIVERSE => 'universe',
         self::SIZE => 'size',
-        self::STATURE => 'stature'
+        self::STATURE => 'stature',
+        self::QUALITY => 'quality',
+        self::IDEAL => 'ideal'
     ];
 
     use IdTrait;

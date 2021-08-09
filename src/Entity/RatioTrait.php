@@ -11,7 +11,7 @@ trait RatioTrait
      * @ORM\Column(options={"default" = 0})
      * @Assert\Type("integer")
      */
-    private $ratio;
+    private $ratio = 10;
 
     public function getRatio()
     {

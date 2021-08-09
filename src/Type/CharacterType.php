@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CharacterType extends AbstractType
@@ -38,15 +39,6 @@ class CharacterType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'entity.character.description',
-            ])
-            ->add('defaults', EntityType::class, [
-                'label' => 'entity.character.defaults',
-                'class' => Particularity::class,
-                'multiple' => true,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('particularity')
-                        ->where('particularity.type = 0');
-                },
             ])
             ->add('ethnic', EntityType::class, [
                 'label' => 'entity.character.ethnic',
@@ -163,6 +155,31 @@ class CharacterType extends AbstractType
                     return $er->createQueryBuilder('particularity')
                         ->where('particularity.type = 14');
                 },
+            ])
+            ->add('qualities', EntityType::class, [
+                'label' => 'entity.character.qualities',
+                'class' => Particularity::class,
+                'multiple' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('particularity')
+                        ->where('particularity.type = 15');
+                },
+            ])
+            ->add('ideal', EntityType::class, [
+                'label' => 'entity.character.ideal',
+                'class' => Particularity::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('particularity')
+                        ->where('particularity.type = 16');
+                },
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr'   =>  ['class' => 'btn btn-primary']
+            ])
+            ->add('saveAndNew', SubmitType::class, [
+                'label' => 'Save and add another',
+                'attr'   =>  ['class' => 'btn btn-primary']
             ]);
     }
 }
