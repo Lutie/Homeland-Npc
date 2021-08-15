@@ -16,7 +16,7 @@ $(function () {
     };
 
     // List of all character parameters which can be randomized
-    const values = ['age', 'sex', 'default', 'ethnic', 'morphologies', 'occupation', 'job', 'character', 'alignement', 'persona', 'manias', 'distinctives', 'culturals', 'liabilities', 'universe', 'size', 'stature']
+    const values = ['age', 'sex', 'default', 'ethnic', 'morphologies', 'occupation', 'job', 'character', 'alignement', 'persona', 'manias', 'distinctives', 'culturals', 'liabilities', 'universe', 'size', 'stature', 'qualities', 'ideal']
 
     values.forEach(value => {
         lockRandom($('#lock_' + value));

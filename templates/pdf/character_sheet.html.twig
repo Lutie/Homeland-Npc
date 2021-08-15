@@ -53,6 +53,11 @@
             <p>Distinctive : {{particularity.name}} ({{particularity.description}})</p>
         {% endif %}
     {% endfor %}
+    {% for particularity in data.qualities %}
+        {% if particularity.name %}
+            <p>Quality : {{particularity.name}} ({{particularity.description}})</p>
+        {% endif %}
+    {% endfor %}
     {% for particularity in data.liabilities %}
         {% if particularity.name %}
             <p>Liability : {{particularity.name}} ({{particularity.description}})</p>
@@ -72,6 +77,9 @@
     {% endif %}
     {% if data.persona %}
         <p>Persona : {{data.persona.name}} ({{data.persona.description}})</p>
+    {% endif %}
+    {% if data.ideal %}
+        <p>Ideal : {{data.ideal.name}} ({{data.ideal.description}})</p>
     {% endif %}
     {% if data.size %}
         <p>Size : {{data.size.name}} ({{data.size.description}})</p>

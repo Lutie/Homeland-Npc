@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait DescriptionTrait
 {
     /**
-     * @ORM\Column()
+     * @ORM\Column(nullable=true)
      * @Assert\Type("string")
      */
     private $description;

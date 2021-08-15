@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait RatioTrait
 {
     /**
-     * @ORM\Column(options={"default" = 0})
+     * @ORM\Column(options={"default" = 10})
      * @Assert\Type("integer")
      */
     private $ratio = 10;

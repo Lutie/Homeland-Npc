@@ -7,6 +7,10 @@
 {% block body %}
     <h1>{{subject|capitalize}}</h1>
     </br>
+    {% if data != null %}
+        <p>Their is {{data|length}} results !</p>
+        </br>
+    {% endif %}
     {% if subject == "particularity" %}
         <form action="{{ path('config_particularity') }}" method="GET">
             <select name="filter" id="filter">

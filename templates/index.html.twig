@@ -19,13 +19,14 @@
 
             <tbody>
             {% set mon_token = csrf_token('CHARACTER_TOKEN') %}
+            {% set SEX_TYPES_BY_INT = constant('App\\Entity\\Character::SEX_TYPES_BY_INT') %}
             {% for char in data %}
                 <tr>
                     <td>
                         <a href="{{path('default_display', {id:char.id})}}">{{ char.firstname }} {{ char.lastname }}</a>
                     </td>
                     <td>
-                        {{ char.sex == 0 ? 'Male' : 'Female' }}
+                        {{ SEX_TYPES_BY_INT[char.sex] }}
                     </td>
                     <td>{{ char.age }}</td>
                     <td>{{ char.createAt|date("d/m/Y") }}</td>

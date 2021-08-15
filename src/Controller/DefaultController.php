@@ -91,7 +91,7 @@ class DefaultController extends AbstractController
         $params = Particularity::PARTICULARITY_TYPES_BY_STR;
         $character->clearParticularities();
         foreach ($params as $key => $param) {
-            if ($form[$key]->getData())
+            if (isset($form[$key]) && $form[$key]->getData())
                 $character->addParticularities($form[$key]->getData());
         }
         return $character;
@@ -150,6 +150,13 @@ class DefaultController extends AbstractController
                     break;
                 case Particularity::STATURE:
                     $character->stature = $particularity;
+                    break;
+                case Particularity::QUALITY:
+                    if(!in_array($particularity, $character->qualities))
+                        $character->qualities[] = $particularity;
+                    break;
+                case Particularity::IDEAL:
+                    $character->ideal = $particularity;
                     break;
             }
         }
